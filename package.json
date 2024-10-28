@@ -1,0 +1,35 @@
+
+{
+  "name": "prisma-to-ecto",
+  "version": "1.0.0",
+  "description": "Convert Prisma schema to Ecto schema with migrations",
+  "main": "dist/index.js",
+  "bin": {
+    "prisma-to-ecto": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "Ecto",
+    "Prisma",
+    "Phoenix Framework",
+    "Elixir",
+    "Prisma-to-Ecto",
+    "schema conversion"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/your-repo-name.git"
+  },
+  "author": "Kanishka Naik",
+  "dependencies": {
+    "prisma": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.0",
+    "ts-node": "^10.0.0",
+    "@types/node": "^14.0.0"
+  }
+}
