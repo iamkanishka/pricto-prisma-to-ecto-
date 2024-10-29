@@ -19,13 +19,13 @@ npm install -g prisma-to-ecto
 
 ## Usage with Example:
 
-# With default folder path (./prisma/prisma.schema)
+### With default folder path (./prisma/prisma.schema)
  
 ```bash
 prisma-to-ecto convert 
 ```
 
-# With custom folder path 
+### With custom folder path 
 
 ```bash
 prisma-to-ecto convert <custom-prismaschemapath>
