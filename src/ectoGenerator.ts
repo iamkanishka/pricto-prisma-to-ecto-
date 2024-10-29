@@ -2,11 +2,11 @@
 import { PrismaModel } from "./parser";
 import * as fs from "fs";
 
-var schemaDir = "./output/schemas";
 
-export function generateEctoSchema(models: PrismaModel[], outputPath: string) {
-  if (!fs.existsSync(schemaDir)) {
-    fs.mkdirSync(schemaDir, { recursive: true });
+
+export function generateEctoSchema(models: PrismaModel[], outputPathDir: string) {
+  if (!fs.existsSync(outputPathDir)) {
+    fs.mkdirSync(outputPathDir, { recursive: true });
   }
 
   models.forEach((model) => {
@@ -35,7 +35,7 @@ ${model.fields
 end
 `;
 
-    fs.writeFileSync(`${schemaDir}/${model.name.toLowerCase()}.ex`, schemaFileContent);
+    fs.writeFileSync(`${outputPathDir}/${model.name.toLowerCase()}.ex`, schemaFileContent);
   });
 }
 

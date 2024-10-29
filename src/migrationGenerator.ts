@@ -1,15 +1,14 @@
 // src/migrationGenerator.ts
 import { PrismaModel } from "./parser";
 import * as fs from "fs";
-
-var migrationDir = "./output/migrations";
+ 
 
 export function generateMigrationFiles(
   models: PrismaModel[],
-  outputPath: string
+  outputPathDir: string 
 ) {
-  if (!fs.existsSync(migrationDir)) {
-    fs.mkdirSync(migrationDir, { recursive: true });
+  if (!fs.existsSync(outputPathDir)) {
+    fs.mkdirSync(outputPathDir, { recursive: true });
   }
 
   models.forEach((model) => {
@@ -35,7 +34,7 @@ end
 
     const timestamp = Date.now();
     fs.writeFileSync(
-      `${migrationDir}/create_${model.name.toLowerCase()}_${timestamp}.exs`,
+      `${outputPathDir}/create_${model.name.toLowerCase()}_${timestamp}.exs`,
       migrationFileContent
     );
   });

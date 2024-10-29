@@ -23,11 +23,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parsePrismaSchema = parsePrismaSchema;
+exports.parsePrismaSchema = void 0;
 // src/parser.ts
 const fs = __importStar(require("fs"));
 function parsePrismaSchema(filePath) {
-    const schemaContent = fs.readFileSync(filePath, 'utf8');
+    if (!fs.existsSync(filePath)) {
+        console.error("\x1b[31mError: " +
+            "Sorry Could not find the schema.prisma file" +
+            "\x1b[0m");
+        console.log('\x1b[33mNote:' + ' Please make sure following folder structure ./prisma/prisma.schema .' + '\x1b[0m');
+        console.log('\x1b[36mInfo:' + ' Try running  prisma-to-ecto convert <custom-prismaschemapath> for custom schema path' + '\x1b[0m');
+        process.exit(1);
+    }
+    const schemaContent = fs.readFileSync(filePath, "utf8");
     const modelPattern = /model\s+(\w+)\s*{([^}]*)}/g;
     const fieldPattern = /(\w+)\s+(\w+)(\s+\@id)?(\s+\@unique)?/g;
     const models = [];
@@ -49,3 +57,4 @@ function parsePrismaSchema(filePath) {
     }
     return models;
 }
+exports.parsePrismaSchema = parsePrismaSchema;

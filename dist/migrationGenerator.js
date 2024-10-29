@@ -23,12 +23,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateMigrationFiles = generateMigrationFiles;
+exports.generateMigrationFiles = void 0;
 const fs = __importStar(require("fs"));
-var migrationDir = "./output/migrations";
-function generateMigrationFiles(models, outputPath) {
-    if (!fs.existsSync(migrationDir)) {
-        fs.mkdirSync(migrationDir, { recursive: true });
+function generateMigrationFiles(models, outputPathDir) {
+    if (!fs.existsSync(outputPathDir)) {
+        fs.mkdirSync(outputPathDir, { recursive: true });
     }
     models.forEach((model) => {
         const migrationFileContent = `
@@ -46,9 +45,10 @@ ${model.fields
 end
 `;
         const timestamp = Date.now();
-        fs.writeFileSync(`${migrationDir}/create_${model.name.toLowerCase()}_${timestamp}.exs`, migrationFileContent);
+        fs.writeFileSync(`${outputPathDir}/create_${model.name.toLowerCase()}_${timestamp}.exs`, migrationFileContent);
     });
 }
+exports.generateMigrationFiles = generateMigrationFiles;
 function convertPrismaType(prismaType) {
     switch (prismaType) {
         case "Int":

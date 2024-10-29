@@ -23,12 +23,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateEctoSchema = generateEctoSchema;
+exports.generateEctoSchema = void 0;
 const fs = __importStar(require("fs"));
-var schemaDir = "./output/schemas";
-function generateEctoSchema(models, outputPath) {
-    if (!fs.existsSync(schemaDir)) {
-        fs.mkdirSync(schemaDir, { recursive: true });
+function generateEctoSchema(models, outputPathDir) {
+    if (!fs.existsSync(outputPathDir)) {
+        fs.mkdirSync(outputPathDir, { recursive: true });
     }
     models.forEach((model) => {
         const schemaFileContent = `
@@ -55,9 +54,10 @@ ${model.fields
   end
 end
 `;
-        fs.writeFileSync(`${schemaDir}/${model.name.toLowerCase()}.ex`, schemaFileContent);
+        fs.writeFileSync(`${outputPathDir}/${model.name.toLowerCase()}.ex`, schemaFileContent);
     });
 }
+exports.generateEctoSchema = generateEctoSchema;
 function convertPrismaType(prismaType) {
     switch (prismaType) {
         case "Int":
