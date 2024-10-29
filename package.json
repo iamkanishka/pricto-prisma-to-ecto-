@@ -1,6 +1,6 @@
 {
   "name": "prisma-to-ecto",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Convert Prisma schema to Ecto schema with migrations",
   "main": "dist/index.js",
   "bin": {
@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/your-repo-name.git"
+    "url": "git+https://github.com/iamkanishka/prisma-to-ecto"
   },
   "author": "Kanishka Naik",
   "dependencies": {
