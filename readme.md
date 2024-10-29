@@ -17,19 +17,19 @@ Install the package globally via npm:
 npm install -g prisma-to-ecto
 ```
 
-## Usage
+## Usage with Example:
 
+# With default folder path (./prisma/prisma.schema)
+ 
 ```bash
-prisma-to-ecto convert ./prisma/schema.prisma ./ecto
+prisma-to-ecto convert 
 ```
 
-## Example:
+# With custom folder path 
 
 ```bash
-prisma-to-ecto convert ./prisma/schema.prisma ./ecto
+prisma-to-ecto convert <custom-prismaschemapath>
 ```
-
-
  
 
 ## Schema Conversion
