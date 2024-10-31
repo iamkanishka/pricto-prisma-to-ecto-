@@ -2,9 +2,10 @@
 import { PrismaModel } from "./parser";
 import * as fs from "fs";
 
-
-
-export function generateEctoSchema(models: PrismaModel[], outputPathDir: string) {
+export function generateEctoSchema(
+  models: PrismaModel[],
+  outputPathDir: string
+) {
   if (!fs.existsSync(outputPathDir)) {
     fs.mkdirSync(outputPathDir, { recursive: true });
   }
@@ -20,7 +21,7 @@ ${model.fields
   .map((field) => `    field :${field.name}, :${convertPrismaType(field.type)}`)
   .join("\n")}
 
-    timestamps()
+       timestamps(type: :utc_datetime)
   end
 
   def changeset(${model.name.toLowerCase()}, attrs) do
@@ -35,7 +36,10 @@ ${model.fields
 end
 `;
 
-    fs.writeFileSync(`${outputPathDir}/${model.name.toLowerCase()}.ex`, schemaFileContent);
+    fs.writeFileSync(
+      `${outputPathDir}/${model.name.toLowerCase()}.ex`,
+      schemaFileContent
+    );
   });
 }
 

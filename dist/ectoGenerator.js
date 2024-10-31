@@ -40,7 +40,7 @@ ${model.fields
             .map((field) => `    field :${field.name}, :${convertPrismaType(field.type)}`)
             .join("\n")}
 
-    timestamps()
+       timestamps(type: :utc_datetime)
   end
 
   def changeset(${model.name.toLowerCase()}, attrs) do

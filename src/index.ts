@@ -13,6 +13,7 @@ const migrationOutputPathDir = "./prisma-to-ecto/migrations";
 
 if (operationType && operationType === "convert") {
   const models = parsePrismaSchema(prismaSchemaDirPath);
+
   generateEctoSchema(models, schemaOutpuPathDir);
   generateMigrationFiles(models, migrationOutputPathDir);
 } else {

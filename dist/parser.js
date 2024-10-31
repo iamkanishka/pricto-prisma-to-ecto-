@@ -57,6 +57,7 @@ function parsePrismaSchema(filePath) {
                 isUnique: !!isUnique,
             });
         }
+        console.log(modelName, fields);
         models.push({ name: modelName, fields });
     }
     return models;

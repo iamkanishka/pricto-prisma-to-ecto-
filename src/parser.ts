@@ -49,8 +49,11 @@ export function parsePrismaSchema(filePath: string): PrismaModel[] {
       });
     }
 
+    console.log( modelName , fields );
+    
     models.push({ name: modelName, fields });
   }
 
   return models;
 }
+
