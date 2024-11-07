@@ -1,5 +1,7 @@
 # Prisma to Ecto Converter
 
+![Prisma to Ecto](image.png)
+
 A tool to convert [Prisma](https://www.prisma.io) schema files into [Ecto](https://hexdocs.pm/ecto/Ecto.html) schema files for seamless integration with Elixir Phoenix applications.
 
 ## Features

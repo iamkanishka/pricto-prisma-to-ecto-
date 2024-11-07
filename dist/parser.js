@@ -71,7 +71,6 @@ function parsePrismaSchema(filePath) {
                     relationType = relationField ? 'one-to-many' : 'one-to-one';
                 }
             }
-            console.log(fieldName, fieldType, !!isUnique, relationType, relatedModel);
             fields.push({
                 name: fieldName,
                 type: fieldType,
