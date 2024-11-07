@@ -40,7 +40,7 @@ ${model.fields
             .map((field) => `    field :${convertCamelToSnake(field.name)}, :${convertPrismaType(field.type)}`)
             .join("\n")}
 
-       timestamps(type: :utc_datetime)
+    timestamps(type: :utc_datetime)
   end
 
   def changeset(${model.name.toLowerCase()}, attrs) do
@@ -59,9 +59,7 @@ end
 }
 exports.generateEctoSchema = generateEctoSchema;
 function convertCamelToSnake(str) {
-    let snakeCaseStr = str.replace(/([a-zA-Z])(?=[A-Z])/g, "$1_").toLowerCase();
-    console.log(str, snakeCaseStr);
-    return snakeCaseStr;
+   return str.replace(/([a-zA-Z])(?=[A-Z])/g, "$1_").toLowerCase();
 }
 function convertPrismaType(prismaType) {
     switch (prismaType) {
