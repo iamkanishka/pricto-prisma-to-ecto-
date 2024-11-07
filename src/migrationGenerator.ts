@@ -23,7 +23,7 @@ ${model.fields
     (field) =>
       `      add :${field.name}, :${convertPrismaType(field.type)}${
         field.isUnique ? ", unique: true" : ""
-      }${field.isId ? ", primary_key: true" : ""}`
+      }`
   )
   .join("\n")}
       timestamps()

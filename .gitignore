@@ -1,1 +1,4 @@
 /node_modules
+/prisma
+/prisma-to-ecto
+/src
