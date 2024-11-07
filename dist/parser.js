@@ -26,6 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.parsePrismaSchema = void 0;
 // src/parser.ts
 const fs = __importStar(require("fs"));
+const PRIMITIVE_TYPES = new Set(['String', 'Int', 'Float', 'Boolean', 'DateTime', 'Json', 'Decimal']);
 function parsePrismaSchema(filePath) {
     if (!fs.existsSync(filePath)) {
         console.error("\x1b[31mError: " +
@@ -41,23 +42,42 @@ function parsePrismaSchema(filePath) {
     }
     const schemaContent = fs.readFileSync(filePath, "utf8");
     const modelPattern = /model\s+(\w+)\s*{([^}]*)}/g;
-    const fieldPattern = /(\w+)\s+(\w+)(\s+\@id)?(\s+\@unique)?/g;
+    const fieldPattern = /(\w+)\s+(\w+)(\[\])?(?:\s+@id)?(?:\s+@unique)?(?:\s+@relation\((?:fields:\s*\[(\w+)\],\s*)?references:\s*\[(\w+)\]\))?/g;
     const models = [];
-    let match;
-    while ((match = modelPattern.exec(schemaContent)) !== null) {
-        const [, modelName, modelContent] = match;
+    let modelMatch;
+    while ((modelMatch = modelPattern.exec(schemaContent)) !== null) {
+        const [, modelName, modelContent] = modelMatch;
         const fields = [];
         let fieldMatch;
         while ((fieldMatch = fieldPattern.exec(modelContent)) !== null) {
-            const [, fieldName, fieldType, isId, isUnique] = fieldMatch;
+            const [, fieldName, fieldType, isArray, isId, isUnique, relationField, referencedField] = fieldMatch;
+            // Skip ID fields
+            if (isId)
+                continue;
+            if (PRIMITIVE_TYPES.has(fieldName))
+                continue;
+            // Determine if this field represents a relationship
+            let relationType = undefined;
+            let relatedModel = undefined;
+            if (referencedField) {
+                relatedModel = fieldType;
+                if (isArray) {
+                    // Many-to-many or one-to-many based on array syntax
+                    relationType = 'many-to-many';
+                }
+                else {
+                    // One-to-one or one-to-many
+                    relationType = relationField ? 'one-to-many' : 'one-to-one';
+                }
+            }
             fields.push({
                 name: fieldName,
                 type: fieldType,
-                isId: !!isId,
                 isUnique: !!isUnique,
+                relationType,
+                relatedModel,
             });
         }
-        console.log(modelName, fields);
         models.push({ name: modelName, fields });
     }
     return models;

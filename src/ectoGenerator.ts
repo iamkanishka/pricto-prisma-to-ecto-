@@ -18,7 +18,7 @@ defmodule MyApp.${model.name} do
 
   schema "${model.name.toLowerCase()}" do
 ${model.fields
-  .map((field) => `    field :${field.name}, :${convertPrismaType(field.type)}`)
+  .map((field) => `    field :${convertCamelToSnake(field.name)}, :${convertPrismaType(field.type)}`)
   .join("\n")}
 
        timestamps(type: :utc_datetime)
@@ -27,10 +27,10 @@ ${model.fields
   def changeset(${model.name.toLowerCase()}, attrs) do
     ${model.name.toLowerCase()}
     |> cast(attrs, [${model.fields
-      .map((field) => `:${field.name}`)
+      .map((field) => `:${convertCamelToSnake(field.name)}`)
       .join(", ")}])
     |> validate_required([${model.fields
-      .map((field) => `:${field.name}`)
+      .map((field) => `:${convertCamelToSnake(field.name)}`)
       .join(", ")}])
   end
 end
@@ -41,6 +41,13 @@ end
       schemaFileContent
     );
   });
+}
+
+function convertCamelToSnake(str: string) {
+  let  snakeCaseStr = str.replace(/([a-zA-Z])(?=[A-Z])/g, "$1_").toLowerCase();
+  console.log(str, snakeCaseStr);
+  
+  return  snakeCaseStr
 }
 
 function convertPrismaType(prismaType: string): string {

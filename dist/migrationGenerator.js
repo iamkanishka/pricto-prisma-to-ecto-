@@ -37,7 +37,7 @@ defmodule MyApp.Repo.Migrations.Create${model.name} do
   def change do
     create table(:${model.name.toLowerCase()}) do
 ${model.fields
-            .map((field) => `      add :${field.name}, :${convertPrismaType(field.type)}${field.isUnique ? ", unique: true" : ""}${field.isId ? ", primary_key: true" : ""}`)
+            .map((field) => `      add :${field.name}, :${convertPrismaType(field.type)}${field.isUnique ? ", unique: true" : ""}`)
             .join("\n")}
       timestamps()
     end
