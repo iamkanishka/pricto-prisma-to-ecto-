@@ -59,7 +59,7 @@ end
 }
 exports.generateEctoSchema = generateEctoSchema;
 function convertCamelToSnake(str) {
-   return str.replace(/([a-zA-Z])(?=[A-Z])/g, "$1_").toLowerCase();
+    return str.replace(/([a-zA-Z])(?=[A-Z])/g, "$1_").toLowerCase();
 }
 function convertPrismaType(prismaType) {
     switch (prismaType) {
