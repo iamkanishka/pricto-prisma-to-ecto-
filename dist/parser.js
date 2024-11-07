@@ -27,6 +27,7 @@ exports.parsePrismaSchema = void 0;
 // src/parser.ts
 const fs = __importStar(require("fs"));
 const PRIMITIVE_TYPES = new Set(['String', 'Int', 'Float', 'Boolean', 'DateTime', 'Json', 'Decimal']);
+const EXCLUDED_FIELDS = new Set(['createdAt', 'updatedAt']);
 function parsePrismaSchema(filePath) {
     if (!fs.existsSync(filePath)) {
         console.error("\x1b[31mError: " +
@@ -54,7 +55,7 @@ function parsePrismaSchema(filePath) {
             // Skip ID fields
             if (isId)
                 continue;
-            if (PRIMITIVE_TYPES.has(fieldName))
+            if (PRIMITIVE_TYPES.has(fieldName) || EXCLUDED_FIELDS.has(fieldName))
                 continue;
             // Determine if this field represents a relationship
             let relationType = undefined;
@@ -70,6 +71,7 @@ function parsePrismaSchema(filePath) {
                     relationType = relationField ? 'one-to-many' : 'one-to-one';
                 }
             }
+            console.log(fieldName, fieldType, !!isUnique, relationType, relatedModel);
             fields.push({
                 name: fieldName,
                 type: fieldType,

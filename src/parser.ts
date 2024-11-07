@@ -16,6 +16,8 @@ export interface PrismaModel {
 
 const PRIMITIVE_TYPES = new Set(['String', 'Int', 'Float', 'Boolean', 'DateTime', 'Json', 'Decimal']);
 
+const EXCLUDED_FIELDS = new Set(['createdAt', 'updatedAt']);
+
 export function parsePrismaSchema(filePath: string): PrismaModel[] {
   if (!fs.existsSync(filePath)) {
     console.error(
@@ -53,7 +55,7 @@ export function parsePrismaSchema(filePath: string): PrismaModel[] {
 
       // Skip ID fields
       if (isId) continue;
-      if (PRIMITIVE_TYPES.has(fieldName)) continue;
+      if (PRIMITIVE_TYPES.has(fieldName) || EXCLUDED_FIELDS.has(fieldName)) continue;
       
 
 
@@ -72,6 +74,8 @@ export function parsePrismaSchema(filePath: string): PrismaModel[] {
           relationType = relationField ? 'one-to-many' : 'one-to-one';
         }
       }
+
+    
 
       fields.push({
         name: fieldName,
